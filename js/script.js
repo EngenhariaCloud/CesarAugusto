@@ -100,21 +100,11 @@ Escolha uma opção:
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message', `${sender}-message`);
         
-        if (sender === 'bot') {
+        if (sender === 'bot' && message === botOptions.welcome.message) {
             messageDiv.classList.add('with-button');
-            
             const textDiv = document.createElement('div');
             textDiv.textContent = message;
             messageDiv.appendChild(textDiv);
-            
-            const whatsappButton = document.createElement('button');
-            whatsappButton.classList.add('whatsapp-button');
-            whatsappButton.innerHTML = '<i class="fab fa-whatsapp"></i> Falar no WhatsApp';
-            whatsappButton.onclick = () => {
-                const message = encodeURIComponent("Olá! Vim pelo site e gostaria de mais informações.");
-                window.open(`https://wa.me/553898912517?text=${message}`, '_blank');
-            };
-            messageDiv.appendChild(whatsappButton);
         } else {
             messageDiv.textContent = message;
         }
@@ -128,42 +118,50 @@ Escolha uma opção:
         const option = botOptions.welcome.options[input];
         
         if (option) {
-            let message;
             let whatsappMessage;
 
             switch(option) {
                 case 'camaras':
-                    message = "Entendi que você tem interesse em câmaras frigoríficas. Vou te conectar com um especialista.";
-                    whatsappMessage = "Olá! Gostaria de informações sobre câmaras frigoríficas";
+                    whatsappMessage = "Olá! Vim pelo site e tenho interesse em *Câmaras Frigoríficas*. Gostaria de mais informações.";
                     break;
                 case 'automacao':
-                    message = "Ótimo! Vou te conectar com nosso especialista em automação industrial.";
-                    whatsappMessage = "Olá! Gostaria de informações sobre automação industrial";
+                    whatsappMessage = "Olá! Vim pelo site e tenho interesse em *Automação Industrial*. Gostaria de mais informações.";
                     break;
                 case 'manutencao':
-                    message = "Certo! Vou te conectar com nossa equipe de manutenção.";
-                    whatsappMessage = "Olá! Preciso de serviços de manutenção";
+                    whatsappMessage = "Olá! Vim pelo site e preciso de *Serviços de Manutenção*. Gostaria de mais informações.";
                     break;
                 case 'emergencia':
-                    message = "⚠️ Entendi que é uma emergência. Vou te conectar imediatamente com nossa equipe.";
-                    whatsappMessage = "🚨 EMERGÊNCIA: Preciso de suporte urgente";
+                    whatsappMessage = "🚨 *EMERGÊNCIA*: Vim pelo site e preciso de suporte urgente!";
                     break;
             }
 
+            // Adiciona apenas a mensagem simples e o botão
             setTimeout(() => {
-                addMessage(message, 'bot');
-                window.open(`https://wa.me/553898912517?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', 'bot-message', 'with-button');
+                
+                const textDiv = document.createElement('div');
+                textDiv.textContent = "Clique no botão abaixo para continuar o atendimento via WhatsApp com nosso especialista.";
+                messageDiv.appendChild(textDiv);
+                
+                const whatsappButton = document.createElement('button');
+                whatsappButton.classList.add('whatsapp-button');
+                whatsappButton.innerHTML = '<i class="fab fa-whatsapp"></i> Continuar no WhatsApp';
+                whatsappButton.onclick = () => {
+                    window.open(`https://wa.me/5538998912517?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+                };
+                messageDiv.appendChild(whatsappButton);
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
             }, 500);
         } else {
             setTimeout(() => {
-                addMessage("Por favor, escolha uma opção de 1 a 4", 'bot');
+                addMessage("⚠️ Por favor, escolha uma opção de 1 a 4", 'bot');
+                // Se a opção for inválida, mostra as opções novamente
+                addMessage(botOptions.welcome.message, 'bot');
             }, 500);
         }
-
-        // Resetar conversa após 3 segundos
-        setTimeout(() => {
-            addMessage(botOptions.welcome.message, 'bot');
-        }, 3000);
     }
 
     // Event listeners
