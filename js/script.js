@@ -152,7 +152,7 @@ Escolha uma opção:
 
             setTimeout(() => {
                 addMessage(message, 'bot');
-                window.open(`https://wa.me/5521999999999?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+                window.open(`https://wa.me/553898912517?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
             }, 500);
         } else {
             setTimeout(() => {
