@@ -112,7 +112,7 @@ Escolha uma opção:
             whatsappButton.innerHTML = '<i class="fab fa-whatsapp"></i> Falar no WhatsApp';
             whatsappButton.onclick = () => {
                 const message = encodeURIComponent("Olá! Vim pelo site e gostaria de mais informações.");
-                window.open(`https://wa.me/5521999999999?text=${message}`, '_blank');
+                window.open(`https://wa.me/553898912517?text=${message}`, '_blank');
             };
             messageDiv.appendChild(whatsappButton);
         } else {
